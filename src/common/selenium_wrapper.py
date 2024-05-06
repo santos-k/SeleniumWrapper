@@ -1,5 +1,4 @@
 from selenium import webdriver
-from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -43,6 +42,12 @@ class SeleniumWrapper:
             return WebDriverWait(parent, timeout).until(EC.presence_of_element_located(locator))
         else:
             return WebDriverWait(self.driver, timeout).until(EC.presence_of_element_located(locator))
+
+    def find_elements(self, locator=None, parent=None, timeout=10):
+        if parent:
+            return WebDriverWait(parent, timeout).until(EC.presence_of_all_elements_located(locator))
+        else:
+            return WebDriverWait(self.driver, timeout).until(EC.presence_of_all_elements_located(locator))
 
     def click_element(self, locator, parent=None, timeout=10):
         element = self.find_element(locator, parent, timeout)
